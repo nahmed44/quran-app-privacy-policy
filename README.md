@@ -5,5 +5,5 @@ This privacy policy governs your use of the software application Ahmadiyya Quran
 
 ## Deployment
 
-It's deployed on github pages as static site. You can access it [here](https://nomanahmed.github.io/ahmadiyya-quran-translations-app/)
+It's deployed on github pages as static site. You can access it [here](https://nahmed44.github.io/quran-app-privacy-policy/PrivacyPolicy.html)
 
