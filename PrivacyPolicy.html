@@ -1,219 +1,898 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Privacy Policy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0a1411" />
+    <meta
+      name="description"
+      content="How the Ahmadiyya Quran Translations app handles your information: what stays on your device, what is shared with Google Firebase and the Open Quran API, and your choices."
+    />
+    <title>Privacy Policy · Ahmadiyya Quran Translations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Amiri&family=Manrope:wght@400;600;700;800&display=swap"
+    />
     <style>
+      /*
+       * Shared styles for PrivacyPolicy.html and TermsAndConditions.html.
+       * "Emerald Night" dark tokens, mirroring EmeraldPalette.dark in
+       * lib/core/theme/emerald_palette.dart.
+       */
+
+      :root {
+        color-scheme: dark;
+        --background: #0a1411;
+        --surface: #12211c;
+        --surface-alt: #0e1a16;
+        --border: #23392f;
+        --divider: #1a2c25;
+        --text-primary: #ecf3ef;
+        --text-secondary: #b9cbc2;
+        --text-muted: #9db3a9;
+        --accent: #3ccb94;
+        --on-accent: #062016;
+        --accent-soft: rgba(60, 203, 148, 0.14);
+        --gold: #d9b25f;
+        --pattern-opacity: 0.09;
+
+        --radius-card: 22px;
+        --radius-inner: 12px;
+        --gutter: 16px;
+        --font-ui: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        --font-arabic: "Amiri", "Noto Naskh Arabic", serif;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        scroll-behavior: smooth;
+        background: var(--background);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
       body {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        padding: 1em;
-        background-color: #b9f0bf;
-        color: #333;
+        margin: 0;
+        background: var(--background);
+        color: var(--text-secondary);
+        font-family: var(--font-ui);
+        font-size: 16px;
+        line-height: 1.65;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: var(--accent);
+        font-weight: 600;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+        overflow-wrap: anywhere;
+      }
+
+      a:hover {
+        text-decoration-thickness: 2px;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+        border-radius: 6px;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: var(--gutter);
+        top: -100px;
+        z-index: 10;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--on-accent);
+        text-decoration: none;
+      }
+
+      .skip-link:focus {
+        top: 12px;
+      }
+
+      /* ---------- Header ---------- */
+
+      .hero {
+        position: relative;
+        padding: 48px var(--gutter) 28px;
+        text-align: center;
+        isolation: isolate;
+      }
+
+      /* Tiling eight-pointed star pattern (StarPatternBackground), fading out. */
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 -80px;
+        z-index: -1;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='none' stroke='%23d9b25f' stroke-width='1' transform='translate(22 22)'%3E%3Crect x='-11' y='-11' width='22' height='22'/%3E%3Crect x='-11' y='-11' width='22' height='22' transform='rotate(45)'/%3E%3C/g%3E%3C/svg%3E");
+        background-repeat: repeat;
+        opacity: var(--pattern-opacity);
+        -webkit-mask-image: linear-gradient(#000, transparent);
+        mask-image: linear-gradient(#000, transparent);
+        pointer-events: none;
+      }
+
+      .badge {
+        display: block;
+        width: 88px;
+        height: 88px;
+        margin: 0 auto 18px;
+      }
+
+      .badge .star {
+        fill: var(--surface);
+        stroke: var(--gold);
+        stroke-width: 1.3;
+      }
+
+      .badge .icon {
+        fill: none;
+        stroke: var(--accent);
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .eyebrow {
+        margin: 0 0 6px;
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        color: var(--text-primary);
+        font-size: clamp(28px, 7vw, 36px);
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+      }
+
+      .arabic {
+        margin: 6px 0 0;
+        color: var(--gold);
+        font-family: var(--font-arabic);
+        font-size: 24px;
+        line-height: 1.6;
+      }
+
+      .pill {
+        display: inline-block;
+        margin-top: 14px;
+        padding: 5px 12px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      /* ---------- Layout ---------- */
+
+      main {
+        width: 100%;
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 0 var(--gutter) 24px;
+      }
+
+      .card {
+        margin: 0 0 16px;
+        padding: 22px 20px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-card);
+        background: var(--surface);
+        scroll-margin-top: 16px;
+      }
+
+      .card > :last-child {
+        margin-bottom: 0;
+      }
+
+      .label {
+        margin: 0 0 4px;
+        color: var(--gold);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        margin: 0 0 12px;
+        color: var(--text-primary);
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+      }
+
+      h3 {
+        margin: 18px 0 6px;
+        color: var(--text-primary);
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      p {
+        margin: 0 0 12px;
+      }
+
+      ul,
+      ol {
+        margin: 0 0 12px;
+        padding-left: 1.25em;
+      }
+
+      li {
+        margin-bottom: 6px;
+      }
+
+      li::marker {
+        color: var(--accent);
+      }
+
+      strong {
+        color: var(--text-primary);
+        font-weight: 700;
+      }
+
+      .lead {
+        color: var(--text-primary);
+        font-size: 17px;
+      }
+
+      /* ---------- At a glance ---------- */
+
+      .glance {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+        gap: 10px;
+        margin: 14px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .glance li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin: 0;
+        padding: 12px 14px;
+        border-radius: var(--radius-inner);
+        background: var(--surface-alt);
+        color: var(--text-primary);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.45;
+      }
+
+      .glance svg {
+        flex: none;
+        width: 20px;
+        height: 20px;
+        margin-top: 1px;
+        fill: none;
+        stroke: var(--accent);
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      /* ---------- Contents ---------- */
+
+      .toc ol {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+        gap: 2px 16px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: toc;
+      }
+
+      .toc li {
+        margin: 0;
+        counter-increment: toc;
+      }
+
+      .toc a {
+        display: flex;
+        gap: 10px;
+        padding: 7px 0;
+        color: var(--text-primary);
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .toc a::before {
+        content: counter(toc, decimal-leading-zero);
+        min-width: 1.6em;
+        color: var(--gold);
+        font-weight: 800;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .toc a:hover {
+        color: var(--accent);
+      }
+
+      /* ---------- Data services (stacked rows) ---------- */
+
+      .services {
+        display: grid;
+        gap: 12px;
+        margin: 14px 0;
+      }
+
+      .service {
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-inner);
+        background: var(--surface-alt);
+      }
+
+      .service h3 {
+        margin: 0 0 2px;
+      }
+
+      .service .role {
+        margin: 0 0 10px;
+        color: var(--text-muted);
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .service dl {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2px;
+        margin: 0;
+        font-size: 15px;
+      }
+
+      .service dt {
+        margin-top: 8px;
+        color: var(--gold);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .service dd {
+        margin: 0;
+      }
+
+      @media (min-width: 560px) {
+        .service dl {
+          grid-template-columns: 120px 1fr;
+          gap: 8px 14px;
+        }
+
+        .service dt {
+          margin-top: 3px;
+        }
+      }
+
+      /* ---------- Callout ---------- */
+
+      .note {
+        margin: 14px 0 12px;
+        padding: 14px 16px;
+        border-left: 3px solid var(--gold);
+        border-radius: 0 var(--radius-inner) var(--radius-inner) 0;
+        background: var(--surface-alt);
+        color: var(--text-primary);
+      }
+
+      /* ---------- Footer ---------- */
+
+      footer {
+        max-width: 720px;
+        margin: 8px auto 0;
+        padding: 8px var(--gutter) 40px;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 14px;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin: 0 0 18px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 10px 18px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--surface);
+        color: var(--text-primary);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .button:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .button.primary {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: var(--on-accent);
+      }
+
+      .button.primary:hover {
+        color: var(--on-accent);
+        filter: brightness(1.08);
+      }
+
+      .verse {
+        margin: 0 0 4px;
+        color: var(--gold);
+        font-family: var(--font-arabic);
+        font-size: 22px;
+        line-height: 1.8;
+      }
+
+      @media print {
+        :root {
+          color-scheme: light;
+          --background: #fff;
+          --surface: #fff;
+          --surface-alt: #f4f4f4;
+          --border: #ccc;
+          --text-primary: #000;
+          --text-secondary: #222;
+          --text-muted: #444;
+          --accent: #0b5a3b;
+          --gold: #6b5118;
+        }
+
+        .hero::before,
+        .skip-link,
+        .toc,
+        .footer-links {
+          display: none;
+        }
+
+        .card {
+          break-inside: avoid;
+        }
       }
     </style>
   </head>
   <body>
-    <div style="text-align: center">
-      <h1>Ahmadiyya Quran Translations App</h1>
-    </div>
-    <strong>Privacy Policy</strong>
-    <p>
-      This privacy policy applies to the Ahmadiyya Quran Translations app
-      (hereby referred to as "Application") for mobile devices that was created
-      by Noman Ahmed (hereby referred to as "Service Provider") as a Free app.
-      This app is intended for use "AS IS".
-    </p>
-    <br /><strong>Information Collection and Use</strong>
-    <p>
-      The Application collects information when you download and use it. This
-      information may include information such as
-    </p>
-    <ul>
-      <li>Your device's Internet Protocol address (e.g. IP address)</li>
-      <li>
-        The pages of the Application that you visit, the time and date of your
-        visit, the time spent on those pages
-      </li>
-      <li>The time spent on the Application</li>
-      <li>The operating system you use on your mobile device</li>
-    </ul>
-    <p></p>
-    <br />
-    <p style="display: none">
-      The Application does not gather precise information about the location of
-      your mobile device.
-    </p>
-    <div>
-      <p>
-        The Application collects your device's location, which helps the Service
-        Provider determine your approximate geographical location and make use
-        of in below ways:
-      </p>
-      <ul>
-        <li>
-          Geolocation Services: The Service Provider utilizes location data to
-          provide features such as personalized content, relevant
-          recommendations, and location-based services.
-        </li>
-        <li>
-          Analytics and Improvements: Aggregated and anonymized location data
-          helps the Service Provider to analyze user behavior, identify trends,
-          and improve the overall performance and functionality of the
-          Application.
-        </li>
-        <li>
-          Third-Party Services: Periodically, the Service Provider may transmit
-          anonymized location data to external services. These services assist
-          them in enhancing the Application and optimizing their offerings.
-        </li>
-      </ul>
-    </div>
-    <br />
-    <p>
-      The Service Provider may use the information you provided to contact you
-      from time to time to provide you with important information, required
-      notices and marketing promotions.
-    </p>
-    <br />
-    <p>
-      For a better experience, while using the Application, the Service Provider
-      may require you to provide us with certain personally identifiable
-      information. The information that the Service Provider request will be
-      retained by them and used as described in this privacy policy.
-    </p>
-    <br /><strong>Third Party Access</strong>
-    <p>
-      Only aggregated, anonymized data is periodically transmitted to external
-      services to aid the Service Provider in improving the Application and
-      their service. The Service Provider may share your information with third
-      parties in the ways that are described in this privacy statement.
-    </p>
-    <div>
-      <br />
-      <p>
-        Please note that the Application utilizes third-party services that have
-        their own Privacy Policy about handling data. Below are the links to the
-        Privacy Policy of the third-party service providers used by the
-        Application:
-      </p>
-      <ul>
-        <li>
-          <a
-            href="https://www.google.com/policies/privacy/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Google Play Services</a
-          >
-        </li>
-        <!---->
-        <li>
-          <a
-            href="https://firebase.google.com/support/privacy"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Google Analytics for Firebase</a
-          >
-        </li>
-        <li>
-          <a
-            href="https://firebase.google.com/support/privacy/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Firebase Crashlytics</a
-          >
-        </li>
-        <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-      </ul>
-    </div>
-    <br />
-    <p>
-      The Service Provider may disclose User Provided and Automatically
-      Collected Information:
-    </p>
-    <ul>
-      <li>
-        as required by law, such as to comply with a subpoena, or similar legal
-        process;
-      </li>
-      <li>
-        when they believe in good faith that disclosure is necessary to protect
-        their rights, protect your safety or the safety of others, investigate
-        fraud, or respond to a government request;
-      </li>
-      <li>
-        with their trusted services providers who work on their behalf, do not
-        have an independent use of the information we disclose to them, and have
-        agreed to adhere to the rules set forth in this privacy statement.
-      </li>
-    </ul>
-    <p></p>
-    <br /><strong>Opt-Out Rights</strong>
-    <p>
-      You can stop all collection of information by the Application easily by
-      uninstalling it. You may use the standard uninstall processes as may be
-      available as part of your mobile device or via the mobile application
-      marketplace or network.
-    </p>
-    <br /><strong>Data Retention Policy</strong>
-    <p>
-      The Service Provider will retain User Provided data for as long as you use
-      the Application and for a reasonable time thereafter. If you'd like them
-      to delete User Provided Data that you have provided via the Application,
-      please contact them at nomandev44@gmail.com and they will respond in a
-      reasonable time.
-    </p>
-    <br /><strong>Children</strong>
-    <p>
-      The Service Provider does not use the Application to knowingly solicit
-      data from or market to children under the age of 13.
-    </p>
-    <div>
-      <br />
-      <p>
-        The Application does not address anyone under the age of 13. The Service
-        Provider does not knowingly collect personally identifiable information
-        from children under 13 years of age. In the case the Service Provider
-        discover that a child under 13 has provided personal information, the
-        Service Provider will immediately delete this from their servers. If you
-        are a parent or guardian and you are aware that your child has provided
-        us with personal information, please contact the Service Provider
-        (nomandev44@gmail.com) so that they will be able to take the necessary
-        actions.
-      </p>
-    </div>
-    <!----><br /><strong>Security</strong>
-    <p>
-      The Service Provider is concerned about safeguarding the confidentiality
-      of your information. The Service Provider provides physical, electronic,
-      and procedural safeguards to protect information the Service Provider
-      processes and maintains.
-    </p>
-    <br /><strong>Changes</strong>
-    <p>
-      This Privacy Policy may be updated from time to time for any reason. The
-      Service Provider will notify you of any changes to the Privacy Policy by
-      updating this page with the new Privacy Policy. You are advised to consult
-      this Privacy Policy regularly for any changes, as continued use is deemed
-      approval of all changes.
-    </p>
-    <br />
-    <p>This privacy policy is effective as of 2024-05-12</p>
-    <br /><strong>Your Consent</strong>
-    <p>
-      By using the Application, you are consenting to the processing of your
-      information as set forth in this Privacy Policy now and as amended by us.
-    </p>
-    <br /><strong>Contact Us</strong>
-    <p>
-      If you have any questions regarding privacy while using the Application,
-      or have questions about the practices, please contact the Service Provider
-      via email at nomandev44@gmail.com.
-    </p>
-    <hr />
-    <!-- Link to Terms and Conditions -->
-    <p>
-      <a href="TermsAndConditions.html">Terms & Conditions</a>
-    </p>
+    <a class="skip-link" href="#content">Skip to content</a>
+
+    <header class="hero">
+      <svg class="badge" viewBox="0 0 88 88" aria-hidden="true">
+        <g transform="translate(44 44)">
+          <rect class="star" x="-23" y="-23" width="46" height="46" rx="4" />
+          <rect class="star" x="-23" y="-23" width="46" height="46" rx="4" transform="rotate(45)" />        </g>
+        <path class="icon" d="M44 30l11 4v8c0 7-4.6 12.6-11 15-6.4-2.4-11-8-11-15v-8z" />
+        <path class="icon" d="M39.5 43.5l3.2 3.2 6-6.2" />
+      </svg>
+      <p class="eyebrow">Ahmadiyya Quran Translations</p>
+      <h1>Privacy Policy</h1>
+      <p class="arabic" lang="ar" dir="rtl">القرآن الكريم</p>
+      <p class="pill">Last updated 23 November 2026</p>
+    </header>
+
+    <main id="content">
+      <section class="card" aria-labelledby="glance-title">
+        <p class="label">At a glance</p>
+        <h2 id="glance-title">Your reading stays on your phone</h2>
+        <p class="lead">
+          The app has no accounts, no ads and no tracking of where you are. It
+          sends a small amount of anonymous usage and crash data to Google
+          Firebase, so the developer can find bugs and see which features are
+          used.
+        </p>
+        <ul class="glance">
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" /><path d="M3 3l18 18" /></svg>
+            No account, name or email needed
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0114 0c0 5.8-7 12-7 12z" /><path d="M3 3l18 18" /></svg>
+            No location access
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3" /><path d="M10 6h4M12 17v.01" /></svg>
+            Bookmarks, last read and settings stay on your device
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M8 12h8" /></svg>
+            No ads, and your data is never sold
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l5-5 4 4 8-8" /><path d="M15 8h5v5" /></svg>
+            Anonymous usage and crash reports via Google Firebase
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12" /><path d="M7 10l5 5 5-5" /><path d="M5 21h14" /></svg>
+            Translations download from the Open Quran API
+          </li>
+        </ul>
+      </section>
+
+      <nav class="card toc" aria-labelledby="toc-title">
+        <p class="label">Contents</p>
+        <h2 id="toc-title">In this policy</h2>
+        <ol>
+          <li><a href="#who">Who we are</a></li>
+          <li><a href="#on-device">Information on your device</a></li>
+          <li><a href="#services">Information sent to other services</a></li>
+          <li><a href="#use">How information is used</a></li>
+          <li><a href="#sharing">Sharing and disclosure</a></li>
+          <li><a href="#retention">How long it is kept</a></li>
+          <li><a href="#choices">Your choices and rights</a></li>
+          <li><a href="#children">Children</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#changes">Changes to this policy</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ol>
+      </nav>
+
+      <section class="card" id="who" aria-labelledby="who-title">
+        <p class="label">01</p>
+        <h2 id="who-title">Who we are</h2>
+        <p>
+          The Ahmadiyya Quran Translations app (“the App”, shown on your device
+          as “Quran”) is a free app for Android and iOS. It is developed
+          independently by Noman Ahmed (“the developer”, “we”) in Moncton, New
+          Brunswick, Canada. The developer is responsible for the personal
+          information described in this policy.
+        </p>
+        <p>
+          The App is <strong>not</strong> an official publication of the
+          Ahmadiyya Muslim Jamā‘at and is not operated by it.
+        </p>
+      </section>
+
+      <section class="card" id="on-device" aria-labelledby="on-device-title">
+        <p class="label">02</p>
+        <h2 id="on-device-title">Information that stays on your device</h2>
+        <p>
+          The following is stored only in the App’s private storage on your
+          device. It is never sent to the developer:
+        </p>
+        <ul>
+          <li>bookmarks and your last-read position;</li>
+          <li>recent searches;</li>
+          <li>
+            your chosen translations, text sizes, commentary display and theme;
+          </li>
+          <li>the Quran text and the translations you download.</li>
+        </ul>
+        <p>
+          It is deleted when you clear the App’s data or uninstall it. If your
+          device backs up app data (for example Android backup to your Google
+          account, or iCloud backup), that backup may include this information.
+          The backup is held under your own account and that provider’s terms.
+        </p>
+      </section>
+
+      <section class="card" id="services" aria-labelledby="services-title">
+        <p class="label">03</p>
+        <h2 id="services-title">Information sent to other services</h2>
+        <p>
+          The App uses the services below. None of them receives your name,
+          email address, contacts or the text you type into search.
+        </p>
+
+        <div class="services">
+          <article class="service" aria-labelledby="svc-analytics">
+            <h3 id="svc-analytics">Google Analytics for Firebase</h3>
+            <p class="role">Usage statistics · provided by Google</p>
+            <dl>
+              <dt>What</dt>
+              <dd>
+                A random app-instance ID; the screens you open; how long you
+                use the App; events such as which translation you downloaded,
+                which display settings you turned on and which surah you
+                opened from search results; app version, device model,
+                operating system, language and approximate region (worked out
+                by Google from your IP address). On Android, Google may also
+                receive the device’s advertising ID. The App does not use it
+                for advertising.
+              </dd>
+              <dt>Why</dt>
+              <dd>To see which features are used and where to improve.</dd>
+              <dt>Kept</dt>
+              <dd>Up to 14 months, then deleted by Google.</dd>
+              <dt>Policy</dt>
+              <dd>
+                <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Firebase privacy</a>
+                ·
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google privacy policy</a>
+              </dd>
+            </dl>
+          </article>
+
+          <article class="service" aria-labelledby="svc-crashlytics">
+            <h3 id="svc-crashlytics">Firebase Crashlytics</h3>
+            <p class="role">Crash and error reports · provided by Google</p>
+            <dl>
+              <dt>What</dt>
+              <dd>
+                When the App crashes or hits an error: a technical stack trace,
+                short diagnostic messages, app version, device model, operating
+                system, free memory and storage, and a random installation ID.
+                Reports never include verse text, your searches or data
+                returned by servers.
+              </dd>
+              <dt>Why</dt>
+              <dd>To find and fix bugs.</dd>
+              <dt>Kept</dt>
+              <dd>90 days.</dd>
+              <dt>Policy</dt>
+              <dd>
+                <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Firebase privacy</a>
+              </dd>
+            </dl>
+          </article>
+
+          <article class="service" aria-labelledby="svc-performance">
+            <h3 id="svc-performance">Firebase Performance Monitoring</h3>
+            <p class="role">Speed measurements · provided by Google</p>
+            <dl>
+              <dt>What</dt>
+              <dd>
+                How long the App takes to start and to complete tasks such as
+                downloads; for its network requests, the address pattern,
+                response time, size and status code; plus device model,
+                operating system, app version and a random installation ID.
+              </dd>
+              <dt>Why</dt>
+              <dd>To keep the App fast and spot slow downloads.</dd>
+              <dt>Kept</dt>
+              <dd>A limited period set by Google.</dd>
+              <dt>Policy</dt>
+              <dd>
+                <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Firebase privacy</a>
+              </dd>
+            </dl>
+          </article>
+
+          <article class="service" aria-labelledby="svc-openquran">
+            <h3 id="svc-openquran">Open Quran API</h3>
+            <p class="role">Translation downloads · api.openquran.com</p>
+            <dl>
+              <dt>What</dt>
+              <dd>
+                When you download a translation, the App requests its chapters
+                from this service. Like any web server, it receives your IP
+                address, the chapter and translation requested and standard
+                technical details of the request. The App sends no identifier
+                with these requests.
+              </dd>
+              <dt>Why</dt>
+              <dd>To deliver the translation you asked for.</dd>
+              <dt>Kept</dt>
+              <dd>According to that service’s own practices.</dd>
+            </dl>
+          </article>
+
+          <article class="service" aria-labelledby="svc-stores">
+            <h3 id="svc-stores">Google Play and the Apple App Store</h3>
+            <p class="role">Installing and updating the App</p>
+            <dl>
+              <dt>What</dt>
+              <dd>
+                The store you installed from handles your download and
+                updates. It gives the developer aggregated statistics such as
+                install counts and crash rates, which do not identify you.
+              </dd>
+              <dt>Policy</dt>
+              <dd>
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google privacy policy</a>
+                ·
+                <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener noreferrer">Apple privacy policy</a>
+              </dd>
+            </dl>
+          </article>
+        </div>
+
+        <p class="note">
+          The App does not request access to your location, contacts, camera,
+          microphone, photos or files.
+        </p>
+      </section>
+
+      <section class="card" id="use" aria-labelledby="use-title">
+        <p class="label">04</p>
+        <h2 id="use-title">How information is used</h2>
+        <p>Information from the services above is used only to:</p>
+        <ul>
+          <li>find, diagnose and fix crashes and errors;</li>
+          <li>
+            understand which features and translations are used, to decide
+            what to improve next;
+          </li>
+          <li>keep downloads and the App fast and reliable.</li>
+        </ul>
+        <p>
+          It is not used for advertising or for profiling you, and the
+          developer does not try to link it to your identity.
+        </p>
+        <p>
+          <strong>Legal basis.</strong> Where the GDPR or UK GDPR applies, this
+          processing relies on the developer’s legitimate interest in keeping
+          the App working and improving it. Under Canadian privacy law
+          (PIPEDA), you consent by using the App. You can withdraw that consent
+          at any time, as described in
+          <a href="#choices">Your choices and rights</a>.
+        </p>
+      </section>
+
+      <section class="card" id="sharing" aria-labelledby="sharing-title">
+        <p class="label">05</p>
+        <h2 id="sharing-title">Sharing and disclosure</h2>
+        <p>
+          Information is not sold, rented or shared for cross-context
+          behavioural advertising. It is handled only by the service providers
+          listed above, which act on the developer’s behalf. It may also be
+          disclosed:
+        </p>
+        <ul>
+          <li>if required by law, such as a court order or subpoena;</li>
+          <li>
+            if necessary to protect the safety, rights or property of users,
+            the developer or others.
+          </li>
+        </ul>
+        <p>
+          <strong>International transfers.</strong> Google processes Firebase
+          data in the United States and other countries. Where the law
+          requires it, Google relies on safeguards such as the European
+          Commission’s Standard Contractual Clauses.
+        </p>
+      </section>
+
+      <section class="card" id="retention" aria-labelledby="retention-title">
+        <p class="label">06</p>
+        <h2 id="retention-title">How long it is kept</h2>
+        <ul>
+          <li><strong>On your device:</strong> until you clear the App’s data or uninstall it.</li>
+          <li><strong>Analytics:</strong> up to 14 months.</li>
+          <li><strong>Crash reports:</strong> 90 days.</li>
+          <li><strong>Performance data:</strong> a limited period set by Google.</li>
+        </ul>
+        <p>Aggregated reports that cannot identify anyone may be kept longer.</p>
+      </section>
+
+      <section class="card" id="choices" aria-labelledby="choices-title">
+        <p class="label">07</p>
+        <h2 id="choices-title">Your choices and rights</h2>
+        <h3>Limit what is collected</h3>
+        <ul>
+          <li>
+            <strong>Advertising ID (Android):</strong> delete or reset it in
+            your device settings (Settings › Privacy › Ads, or Settings ›
+            Google › Ads, depending on your device).
+          </li>
+          <li>
+            <strong>Stop all collection:</strong> uninstall the App. Nothing
+            further is sent after that.
+          </li>
+          <li>
+            <strong>Remove local data:</strong> clear the App’s storage in your
+            device settings, or uninstall it.
+          </li>
+        </ul>
+        <h3>Your rights</h3>
+        <p>
+          Depending on where you live, you may have the right to access,
+          correct or delete your personal information, to object to or
+          restrict its use, and to receive a copy of it. Because the App has no
+          accounts, the developer usually cannot tell which data belongs to
+          you. Email the developer and they will explain what can be done.
+          Where possible, they will use Google’s tools to delete analytics data
+          linked to your device.
+        </p>
+        <p>
+          You can also complain to your local data protection authority. In
+          Canada, that is the
+          <a href="https://www.priv.gc.ca/" target="_blank" rel="noopener noreferrer">Office of the Privacy Commissioner of Canada</a>.
+        </p>
+      </section>
+
+      <section class="card" id="children" aria-labelledby="children-title">
+        <p class="label">08</p>
+        <h2 id="children-title">Children</h2>
+        <p>
+          The App is meant for a general audience and is not directed at
+          children under 13. The developer does not knowingly collect personal
+          information from children. If you are a parent or guardian and
+          believe your child has provided personal information, email the
+          developer and it will be deleted where possible.
+        </p>
+      </section>
+
+      <section class="card" id="security" aria-labelledby="security-title">
+        <p class="label">09</p>
+        <h2 id="security-title">Security</h2>
+        <p>
+          Everything the App sends over the internet uses encrypted HTTPS
+          connections. Data on your device is kept in the App’s private
+          storage, which the operating system protects. The developer runs no
+          servers of their own; Firebase data is held by Google under its
+          security programme. No system is perfectly secure, so please keep
+          your device updated and protected with a screen lock.
+        </p>
+      </section>
+
+      <section class="card" id="changes" aria-labelledby="changes-title">
+        <p class="label">10</p>
+        <h2 id="changes-title">Changes to this policy</h2>
+        <p>
+          If this policy changes, the new version is posted on this page with
+          a new “Last updated” date. Significant changes will also be
+          mentioned in the App’s release notes.
+        </p>
+        <h3>Version history</h3>
+        <ul>
+          <li>
+            <strong>23 November 2026:</strong> rewritten to describe exactly
+            what the App collects. Removed incorrect statements about location
+            data and marketing contact. Added the Open Quran API, Firebase
+            Performance Monitoring, retention periods and your rights.
+          </li>
+          <li><strong>12 May 2024:</strong> first version.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="contact" aria-labelledby="contact-title">
+        <p class="label">11</p>
+        <h2 id="contact-title">Contact</h2>
+        <p>
+          For questions about this policy or your information, email the
+          developer at
+          <a href="mailto:nomandev44@gmail.com">nomandev44@gmail.com</a>.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <nav class="footer-links" aria-label="Legal">
+        <a class="button primary" href="PrivacyPolicy.html" aria-current="page">Privacy Policy</a>
+        <a class="button" href="TermsAndConditions.html">Terms &amp; Conditions</a>
+      </nav>
+      <p class="verse" lang="ar" dir="rtl">وَرَتِّلِ الۡقُرۡاٰنَ تَرۡتِیۡلًا</p>
+      <p>Ahmadiyya Quran Translations · an independent app by Noman Ahmed</p>
+    </footer>
   </body>
 </html>
